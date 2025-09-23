@@ -10,14 +10,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +28,15 @@ public class Book {
 
   @NotBlank
   @Column(nullable = false)
-  private String nombre;
+  private String title;
 
   @NotBlank
-  @Email
   @Column(nullable = false)
-  private String email;
+  private String author;
+
+  @NotBlank
+  @Column(nullable = false, unique = true)
+  private String isbn;
 
   @OneToMany(mappedBy="book")
   private List<Loan> loans;

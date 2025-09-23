@@ -12,13 +12,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +31,12 @@ public class User {
 
   @NotBlank
   @Column(nullable = false)
-  private String title;
+  private String name;
 
   @NotBlank
-  @Column(nullable = false)
-  private String author;
-
-  @NotBlank
+  @Email
   @Column(nullable = false, unique = true)
-  private String isbn;
+  private String email;
 
   @OneToMany(mappedBy="user")
   private List<Loan> loans;
