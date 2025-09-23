@@ -19,6 +19,16 @@ public class LoanExceptionHandler {
     return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
   }
 
+  @ExceptionHandler(UserHaveBookException.class)
+  public ResponseEntity<Map<String, Object>> handleUserHaveBookException(UserHaveBookException ex) {
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+  }
+
+  @ExceptionHandler(UnreturnedBookException.class)
+  public ResponseEntity<Map<String, Object>> handleUnreturnedBookException(UnreturnedBookException ex) {
+    return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
+  }
+
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
     return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());

@@ -9,6 +9,8 @@ import com.example.library.book.model.Book;
 import com.example.library.book.repository.BookRepository;
 import com.example.library.loan.dto.LoanDTO;
 import com.example.library.loan.exception.LoanNotFoundExceptionById;
+import com.example.library.loan.exception.UnreturnedBookException;
+import com.example.library.loan.exception.UserHaveBookException;
 import com.example.library.loan.mapper.LoanMapper;
 import com.example.library.loan.model.Loan;
 import com.example.library.loan.repository.LoanRepository;
@@ -31,6 +33,12 @@ public class LoanService {
   }
 
   public void createLoan(LoanDTO loanDTO) {
+    if (loanRepository.userHaveBookByUserIdAndBookId(loanDTO.getBookId(), loanDTO.getUserId())) {
+      throw new UserHaveBookException();
+    } else if (loanRepository.existsUnreturnedLoanByBookId(loanDTO.getBookId())) {
+      throw new UnreturnedBookException();
+    }
+
     Loan loan = loanMapper.toEntity(loanDTO);
 
     User user = userRepository.findById(loanDTO.getUserId())
