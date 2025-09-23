@@ -3,11 +3,14 @@ package com.example.library.loan.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.library.loan.model.Loan;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
@@ -23,4 +26,9 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
       "FROM Loan l " +
       "WHERE l.user.id = :userId AND l.book.id = :bookId AND l.returned = false")
   boolean userHaveBookByUserIdAndBookId(@Param("bookId") Long bookId, @Param("userId") Long userId);
+
+  @Modifying
+  @Transactional
+  @Query("UPDATE Loan l SET l.returned = true WHERE l.id = :loanId")
+  void updateLoanReturnedById(@Param("loanId") Long loanId);
 }
