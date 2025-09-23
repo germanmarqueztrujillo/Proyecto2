@@ -30,7 +30,7 @@ public class LoanService {
     this.loanMapper = loanMapper;
   }
 
-  public void saveLoan(LoanDTO loanDTO) {
+  public void createLoan(LoanDTO loanDTO) {
     Loan loan = loanMapper.toEntity(loanDTO);
 
     User user = userRepository.findById(loanDTO.getUserId())
