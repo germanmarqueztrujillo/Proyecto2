@@ -1,6 +1,6 @@
 package com.example.library.loan.dto;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -13,11 +13,11 @@ import lombok.Setter;
 public class LoanDTO {
   @NotNull
   @Past
-  private Date startDate;
+  private OffsetDateTime startDate;
 
   @NotNull
   @Future
-  private Date dueDate;
+  private OffsetDateTime dueDate;
 
   @NotNull
   private Boolean returned = false;

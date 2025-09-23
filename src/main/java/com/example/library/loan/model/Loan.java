@@ -1,6 +1,6 @@
 package com.example.library.loan.model;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import com.example.library.book.model.Book;
 import com.example.library.user.model.User;
@@ -27,11 +27,11 @@ public class Loan {
   
   @NotNull
   @Past
-  private Date startDate;
+  private OffsetDateTime startDate;
 
   @NotNull
   @Future
-  private Date dueDate;
+  private OffsetDateTime dueDate;
 
   @NotNull
   private Boolean returned = false;
