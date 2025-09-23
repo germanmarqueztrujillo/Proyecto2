@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.example.library.book.model.Book;
 import com.example.library.book.repository.BookRepository;
 import com.example.library.loan.dto.LoanDTO;
+import com.example.library.loan.exception.BookNotFoundExceptionById;
 import com.example.library.loan.exception.LoanNotFoundExceptionById;
 import com.example.library.loan.exception.UnreturnedBookException;
 import com.example.library.loan.exception.UserHaveBookException;
+import com.example.library.loan.exception.UserNotFoundExceptionById;
 import com.example.library.loan.mapper.LoanMapper;
 import com.example.library.loan.model.Loan;
 import com.example.library.loan.repository.LoanRepository;
@@ -42,9 +44,9 @@ public class LoanService {
     Loan loan = loanMapper.toEntity(loanDTO);
 
     User user = userRepository.findById(loanDTO.getUserId())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserNotFoundExceptionById(loanDTO.getUserId()));
     Book book = bookRepository.findById(loanDTO.getBookId())
-            .orElseThrow(() -> new RuntimeException("Book not found"));
+            .orElseThrow(() -> new BookNotFoundExceptionById(loanDTO.getBookId()));
 
     loan.setUser(user);
     loan.setBook(book);
