@@ -28,8 +28,8 @@ public class LoanController {
   }
 
   @GetMapping("/{id}")
-  public LoanDTO getLoan(@PathVariable Long loanId) {
-    return loanService.getLoanById(loanId);
+  public LoanDTO getLoan(@PathVariable Long id) {
+    return loanService.getLoanById(id);
   }
 
   @GetMapping
@@ -38,7 +38,7 @@ public class LoanController {
   }
 
   @PatchMapping("/{id}/return")
-  public void updateLoanReturnedById(@PathVariable Long LoanId) {
-    loanService.updateLoanReturnedById(LoanId);
+  public void updateLoanReturnedById(@PathVariable Long id) {
+    loanService.updateLoanReturnedById(id);
   }
 }
