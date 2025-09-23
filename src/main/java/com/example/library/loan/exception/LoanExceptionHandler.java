@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice(basePackages = "com.example.library.loan")
 public class LoanExceptionHandler {
@@ -46,6 +47,26 @@ public class LoanExceptionHandler {
     body.put("timestamp", LocalDateTime.now());
     body.put("status", HttpStatus.BAD_REQUEST.value());
     body.put("error", "Bad Request");
+    body.put("errors", errors);
+
+    return ResponseEntity.badRequest().body(body);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<Map<String, Object>> handleConstraintViolation(
+      ConstraintViolationException ex) {
+    Map<String, Object> errors = new HashMap<>();
+    ex.getConstraintViolations()
+        .forEach(violation -> {
+          String fieldName = violation.getPropertyPath().toString();
+          String errorMessage = violation.getMessage();
+          errors.put(fieldName, errorMessage);
+        });
+
+    Map<String, Object> body = new HashMap<>();
+    body.put("timestamp", LocalDateTime.now());
+    body.put("status", HttpStatus.BAD_REQUEST.value());
+    body.put("error", "Validation Failed");
     body.put("errors", errors);
 
     return ResponseEntity.badRequest().body(body);
