@@ -19,8 +19,8 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
        "WHERE l.book.id = :bookId AND l.returned = false")
   boolean existsUnreturnedLoanByBookId(@Param("bookId") Long bookId);
 
-    @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
-       "FROM Loan l " +
-       "WHERE l.user.id = :userId AND l.book.id = :bookId AND l.returned = false")
+  @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
+      "FROM Loan l " +
+      "WHERE l.user.id = :userId AND l.book.id = :bookId AND l.returned = false")
   boolean userHaveBookByUserIdAndBookId(@Param("bookId") Long bookId, @Param("userId") Long userId);
 }

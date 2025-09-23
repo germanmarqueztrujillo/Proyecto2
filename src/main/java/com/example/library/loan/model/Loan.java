@@ -11,7 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,13 +26,15 @@ public class Loan {
   private Long id;
   
   @NotNull
+  @Past
   private Date startDate;
 
   @NotNull
+  @Future
   private Date dueDate;
 
   @NotNull
-  private Boolean returned;
+  private Boolean returned = false;
 
   @ManyToOne
   @JoinColumn(name="user_id", nullable=false)
