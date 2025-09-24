@@ -11,9 +11,11 @@ import com.example.library.loan.services.LoanService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.OffsetDateTime;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,7 +26,15 @@ class LoanControllerTest {
 
   @Autowired private ObjectMapper objectMapper;
 
-  @MockBean private LoanService loanService;
+  @Autowired private LoanService loanService; // se inyecta el mock
+
+  @TestConfiguration
+  static class MockConfig {
+    @Bean
+    LoanService loanService() {
+      return Mockito.mock(LoanService.class);
+    }
+  }
 
   @Test
   void whenValidRequest_thenReturnOk() throws Exception {
