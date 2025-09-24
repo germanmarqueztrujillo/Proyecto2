@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, Long> {
-  @Query("SELECT l FROM Loan l WHERE l.returned = false AND l.user.id = :userId")
-  List<Loan> findByUserAndNotReturned(@Param("userId") Long userId);
+  @Query("SELECT l FROM Loan l WHERE l.user.id = :userId")
+  List<Loan> findByUserId(@Param("userId") Long userId);
 
   @Query(
       "SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END "

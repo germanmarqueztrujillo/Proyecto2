@@ -35,6 +35,11 @@ public class LoanController {
     return loanService.getLoans();
   }
 
+  @GetMapping("/users/{id}/loans")
+  public List<LoanDTO> getLoansByUserId(@PathVariable Long id) {
+    return loanService.getLoansByUserId(id);
+  }
+
   @PatchMapping("/{id}/return")
   public void updateLoanReturnedById(@PathVariable Long id) {
     loanService.updateLoanReturnedById(id);

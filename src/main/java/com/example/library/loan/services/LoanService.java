@@ -70,6 +70,11 @@ public class LoanService {
     return loans.stream().map(loanMapper::toDTO).collect(Collectors.toList());
   }
 
+  public List<LoanDTO> getLoansByUserId(Long userId) {
+    List<Loan> loans = loanRepository.findByUserId(userId);
+    return loans.stream().map(loanMapper::toDTO).collect(Collectors.toList());
+  }
+
   public void updateLoanReturnedById(Long loanId) {
     loanRepository.updateLoanReturnedById(loanId);
   }
