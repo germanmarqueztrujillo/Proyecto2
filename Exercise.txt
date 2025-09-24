@@ -1,5 +1,51 @@
-Implement an API to manage a ...
+📚 Ejercicio técnico: Gestión de préstamos de una biblioteca
+📝 Requisitos
 
-Requirements:
+Tienes que implementar un servicio REST con Spring Boot que permita gestionar los préstamos de libros.
+Cada Préstamo (Loan) está asociado a:
 
-- ...
+- un Libro (Book)
+
+- un Usuario (User)
+
+- una fecha de inicio
+
+- una fecha de devolución prevista
+
+✅ Lo que se espera
+
+Entidades JPA:
+
+- User (id, nombre, email)
+
+- Book (id, título, autor, isbn único)
+
+- Loan (id, user, book, startDate, dueDate)
+
+Endpoints REST:
+
+- POST /loans → crear un préstamo.
+
+- GET /loans/{id} → obtener un préstamo por id.
+
+- GET /loans → listar todos los préstamos.
+
+- PATCH /loans/{id}/return → marcar un préstamo como devuelto.
+
+Reglas de negocio:
+
+- Un usuario no puede tener dos préstamos activos del mismo libro.
+
+- Al crear un préstamo, si el libro ya está prestado a otro usuario, debe devolver un error 400 Bad Request.
+
+- Validar que startDate no sea futura.
+
+Extras (si tienes tiempo en la entrevista):
+
+- Exponer un GET /users/{id}/loans para listar los préstamos de un usuario.
+
+- Manejar las validaciones con un @RestControllerAdvice.
+
+- Documentar con Swagger/OpenAPI.
+
+- Añade algún tipo de testing.
