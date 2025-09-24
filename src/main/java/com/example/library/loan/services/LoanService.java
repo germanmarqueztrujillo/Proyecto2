@@ -1,10 +1,5 @@
 package com.example.library.loan.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.example.library.book.model.Book;
 import com.example.library.book.repository.BookRepository;
 import com.example.library.loan.dto.LoanDTO;
@@ -18,6 +13,9 @@ import com.example.library.loan.model.Loan;
 import com.example.library.loan.repository.LoanRepository;
 import com.example.library.user.model.User;
 import com.example.library.user.repository.UserRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LoanService {
@@ -27,7 +25,11 @@ public class LoanService {
   private final BookRepository bookRepository;
   private final LoanMapper loanMapper;
 
-  public LoanService(LoanRepository loanRepository, UserRepository userRepository, BookRepository bookRepository, LoanMapper loanMapper) {
+  public LoanService(
+      LoanRepository loanRepository,
+      UserRepository userRepository,
+      BookRepository bookRepository,
+      LoanMapper loanMapper) {
     this.loanRepository = loanRepository;
     this.userRepository = userRepository;
     this.bookRepository = bookRepository;
@@ -43,9 +45,13 @@ public class LoanService {
 
     Loan loan = loanMapper.toEntity(loanDTO);
 
-    User user = userRepository.findById(loanDTO.getUserId())
+    User user =
+        userRepository
+            .findById(loanDTO.getUserId())
             .orElseThrow(() -> new UserNotFoundExceptionById(loanDTO.getUserId()));
-    Book book = bookRepository.findById(loanDTO.getBookId())
+    Book book =
+        bookRepository
+            .findById(loanDTO.getBookId())
             .orElseThrow(() -> new BookNotFoundExceptionById(loanDTO.getBookId()));
 
     loan.setUser(user);
@@ -58,7 +64,7 @@ public class LoanService {
     Loan loan = loanRepository.findById(id).orElseThrow(() -> new LoanNotFoundExceptionById(id));
     return loanMapper.toDTO(loan);
   }
-  
+
   public List<LoanDTO> getLoans() {
     List<Loan> loans = loanRepository.findAll();
     return loans.stream().map(loanMapper::toDTO).collect(Collectors.toList());

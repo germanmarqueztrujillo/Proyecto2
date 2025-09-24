@@ -1,20 +1,18 @@
 package com.example.library.book.model;
 
-import java.util.List;
-
 import com.example.library.loan.model.Loan;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -38,6 +36,6 @@ public class Book {
   @Column(nullable = false, unique = true)
   private String isbn;
 
-  @OneToMany(mappedBy="book")
+  @OneToMany(mappedBy = "book")
   private List<Loan> loans;
 }

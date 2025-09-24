@@ -1,5 +1,6 @@
 package com.example.library.loan.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice(basePackages = "com.example.library.loan")
 public class LoanExceptionHandler {
@@ -26,7 +26,8 @@ public class LoanExceptionHandler {
   }
 
   @ExceptionHandler(UnreturnedBookException.class)
-  public ResponseEntity<Map<String, Object>> handleUnreturnedBookException(UnreturnedBookException ex) {
+  public ResponseEntity<Map<String, Object>> handleUnreturnedBookException(
+      UnreturnedBookException ex) {
     return buildResponse(HttpStatus.CONFLICT, ex.getMessage());
   }
 
@@ -67,11 +68,12 @@ public class LoanExceptionHandler {
       ConstraintViolationException ex) {
     Map<String, Object> errors = new HashMap<>();
     ex.getConstraintViolations()
-        .forEach(violation -> {
-          String fieldName = violation.getPropertyPath().toString();
-          String errorMessage = violation.getMessage();
-          errors.put(fieldName, errorMessage);
-        });
+        .forEach(
+            violation -> {
+              String fieldName = violation.getPropertyPath().toString();
+              String errorMessage = violation.getMessage();
+              errors.put(fieldName, errorMessage);
+            });
 
     Map<String, Object> body = new HashMap<>();
     body.put("timestamp", LocalDateTime.now());

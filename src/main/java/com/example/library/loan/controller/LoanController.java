@@ -1,7 +1,8 @@
 package com.example.library.loan.controller;
 
+import com.example.library.loan.dto.LoanDTO;
+import com.example.library.loan.services.LoanService;
 import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,16 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.library.loan.dto.LoanDTO;
-import com.example.library.loan.services.LoanService;
-
 @RestController
 @RequestMapping("/loans")
 public class LoanController {
-  
+
   private final LoanService loanService;
 
-  public LoanController (LoanService loanService) {
+  public LoanController(LoanService loanService) {
     this.loanService = loanService;
   }
 
